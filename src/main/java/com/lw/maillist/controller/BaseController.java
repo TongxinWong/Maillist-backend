@@ -89,7 +89,7 @@ public class BaseController {
         maillist.mailBoxes = maillistBaseListener.mailBoxes;
         maillist.errMsg = myParseErrorListener.errorList;
         maillist.hasError = false;
-        if (maillistBaseListener.isError.contains("true")){
+        if (maillistBaseListener.isError.contains(true)){
             maillist.hasError = true;
         }
 

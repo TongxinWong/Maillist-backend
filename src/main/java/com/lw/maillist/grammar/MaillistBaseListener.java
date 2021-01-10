@@ -67,6 +67,7 @@ public class MaillistBaseListener implements MaillistListener {
 
 		mailAddress.add(ctx.getText());
 		isError.add(isFalse);
+		isFalse = false;
 	}
 	/**
 	 * {@inheritDoc}
