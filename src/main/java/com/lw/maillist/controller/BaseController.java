@@ -18,10 +18,10 @@ import java.util.ArrayList;
 @RequestMapping("/api")
 public class BaseController {
 
-    @PostMapping("/test")
+    @PostMapping("/emailParse")
     public Maillist Parse(@RequestBody OriginMaillist originMaillist){
         String listStr = originMaillist.getOriginMaillist();
-        System.out.println("输入的字符串" + listStr);
+        //System.out.println("输入的字符串" + listStr);
         // 对每一个输入的字符串，构造一个 ANTLRStringStream 流 in
         ANTLRInputStream input = new ANTLRInputStream(listStr);
         // 用 in 构造词法分析器 lexer，词法分析的作用是将字符聚集成单词或者符号
@@ -43,9 +43,6 @@ public class BaseController {
         ParseTreeWalker walker = new ParseTreeWalker();
         MaillistBaseListener maillistBaseListener = new MaillistBaseListener();
         walker.walk(maillistBaseListener, parserTree);
-        for (String s: myParseErrorListener.errorList) {
-            System.out.println("sdfd"+s);
-        }
 
         //构造json数据
         Maillist maillist = new Maillist();

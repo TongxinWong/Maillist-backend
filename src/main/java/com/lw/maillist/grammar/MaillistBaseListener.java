@@ -34,7 +34,7 @@ public class MaillistBaseListener implements MaillistListener {
 	 */
 	@Override public void enterMaillist(MaillistParser.MaillistContext ctx) {
 		MailBox mailBox = new MailBox();
-		System.out.println(ctx.getText());
+		//System.out.println(ctx.getText());
 	}
 	/**
 	 * {@inheritDoc}
@@ -56,7 +56,7 @@ public class MaillistBaseListener implements MaillistListener {
 		localError = true;
 		domainError = true;
 		nodeError = false;
-		System.out.println(index+"  "+ctx.getText());
+		//System.out.println(index+"  "+ctx.getText());
 	}
 	/**
 	 * {@inheritDoc}
@@ -68,7 +68,7 @@ public class MaillistBaseListener implements MaillistListener {
 		if (nodeError||(domainError||localError)){
 			isFalse = (!isFalse);
 		}
-		System.out.println("local: "+localError+" domain: "+domainError+" node: "+nodeError);
+		//System.out.println("local: "+localError+" domain: "+domainError+" node: "+nodeError);
 
 		mailBox.setMailAddress(ctx.getText());
 		mailBox.setError(isFalse);
@@ -78,7 +78,6 @@ public class MaillistBaseListener implements MaillistListener {
 
 		mailBox = new MailBox();
 
-		System.out.println("添加邮箱对象成功: "+ ctx.getText()+" isFalse: "+ isFalse);
 
 		isError.add(isFalse);
 		isFalse = false;
@@ -179,6 +178,6 @@ public class MaillistBaseListener implements MaillistListener {
 	 */
 	@Override public void visitErrorNode(ErrorNode node) {
 		nodeError = true;
-		System.out.println("出错了！"+node.getText());
+		//System.out.println("出错了！"+node.getText());
 	}
 }

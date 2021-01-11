@@ -29,7 +29,7 @@ public class EmailVerfication {
             Lookup lookup = new Lookup(hostName, Type.MX);
             lookup.run();
             if (lookup.getResult() != Lookup.SUCCESSFUL) {//查找失败
-                System.out.println("邮箱（"+email+"）校验未通过，未找到对应的MX记录!");
+                //System.out.println("邮箱（"+email+"）校验未通过，未找到对应的MX记录!");
                 return false;
             } else {//查找成功
                 result = lookup.getAnswers();
@@ -37,7 +37,7 @@ public class EmailVerfication {
             //尝试和SMTP邮箱服务器建立Socket连接
             for (int i = 0; i < result.length; i++) {
                 host = result[i].getAdditionalName().toString();
-                System.out.println("SMTPClient try connect to host:"+host);
+                //System.out.println("SMTPClient try connect to host:"+host);
 
                 //此connect()方法来自SMTPClient的父类:org.apache.commons.net.SocketClient
                 //继承关系结构：org.apache.commons.net.smtp.SMTPClient-->org.apache.commons.net.smtp.SMTP-->org.apache.commons.net.SocketClient
@@ -54,8 +54,8 @@ public class EmailVerfication {
                     client.disconnect();
                     continue;
                 } else {
-                    System.out.println("找到MX记录:"+hostName);
-                    System.out.println("建立链接成功："+hostName);
+                    //System.out.println("找到MX记录:"+hostName);
+                    //System.out.println("建立链接成功："+hostName);
                     break;
                 }
             }
