@@ -2,13 +2,18 @@ package com.lw.maillist.controller;
 
 
 
+import com.alibaba.fastjson.JSON;
 import com.lw.maillist.grammar.*;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 @CrossOrigin
@@ -97,6 +102,29 @@ public class BaseController {
         maillist.hasError = false;
         if (maillistBaseListener.isError.contains(true)){
             maillist.hasError = true;
+        }
+
+        //验证邮箱地址的有效性
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        for (MailBox mailBox:
+             maillist.mailBoxes) {
+            mailBox.isValid = false;
+            //如果邮箱地址合法则判断有效性
+            if(!mailBox.isError){
+                Request request = new Request.Builder().url("https://app.verify-email.org/api/v1/myxNPqXvf8on2yhoNStg6ca3MBjJN8hfQ7JPhReUrMEmDAZuwE/verify/" + mailBox.mailAddress).build();
+                try (Response response = okHttpClient.newCall(request).execute()) {
+                    okhttp3.ResponseBody body = (okhttp3.ResponseBody) response.body();
+                    if (response.isSuccessful()) {
+                        VerifyRes verifyRes = JSON.parseObject(body.string(), VerifyRes.class);
+                        if(verifyRes.getStatus() == 1){
+                            mailBox.isValid = true;
+                        }
+                    }
+                }catch (IOException e){
+                    System.out.println(e.getMessage());
+                }
+            }
         }
 
         return maillist;

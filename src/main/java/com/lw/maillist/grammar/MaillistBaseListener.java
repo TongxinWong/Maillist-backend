@@ -17,7 +17,6 @@ public class MaillistBaseListener implements MaillistListener {
 	//定义数据结构用来存放中间数据
 	public List<MailBox> mailBoxes = new ArrayList<MailBox>();
 	public MailBox mailBox = new MailBox();
-	public List<String> mailAddress = new ArrayList<String>();
 	public List<Boolean> isError = new ArrayList<Boolean>();
 	public String userName;
 	public String domain;
@@ -81,7 +80,6 @@ public class MaillistBaseListener implements MaillistListener {
 
 		System.out.println("添加邮箱对象成功: "+ ctx.getText()+" isFalse: "+ isFalse);
 
-		mailAddress.add(ctx.getText());
 		isError.add(isFalse);
 		isFalse = false;
 	}

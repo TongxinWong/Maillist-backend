@@ -10,6 +10,7 @@ public class MailBox {
     public String userName;
     public String domain;
     public boolean isError;
+    public boolean isValid;
 
     public void setMailAddress(String mailAddress) {
         this.mailAddress = mailAddress;
@@ -25,5 +26,9 @@ public class MailBox {
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    public void setValid(boolean valid) {
+        isValid = valid;
     }
 }
