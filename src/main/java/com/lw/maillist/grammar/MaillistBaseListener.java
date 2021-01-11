@@ -19,7 +19,9 @@ public class MaillistBaseListener implements MaillistListener {
 	public MailBox mailBox = new MailBox();
 	public List<String> mailAddress = new Stack<String>();
 	public List<Boolean> isError = new Stack<Boolean>();
-	public List<String> err_msg = new Stack<String>();
+	public boolean localError;
+	public boolean domainError;
+	public boolean nodeError;
 	//用于表示当前邮箱
 	private int index;
 	private boolean isFalse = false;
@@ -49,6 +51,9 @@ public class MaillistBaseListener implements MaillistListener {
 	@Override public void enterUMailBox(MaillistParser.UMailBoxContext ctx) {
 		//每次进入时，说明到下一个邮箱地址了
 		index++;
+		localError = true;
+		domainError = true;
+		nodeError = false;
 		System.out.println(index+"  "+ctx.getText());
 	}
 	/**
@@ -57,6 +62,11 @@ public class MaillistBaseListener implements MaillistListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitUMailBox(MaillistParser.UMailBoxContext ctx) {
+
+		if (nodeError||(domainError||localError)){
+			isFalse = (!isFalse);
+		}
+		System.out.println("local: "+localError+" domain: "+domainError+" node: "+nodeError);
 		mailBox.setMailAddress(ctx.getText());
 		mailBox.setError(isFalse);
 		mailBoxes.add(mailBox);
@@ -81,6 +91,8 @@ public class MaillistBaseListener implements MaillistListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitULocal_part(MaillistParser.ULocal_partContext ctx) {
+		//用户地址合法，但尚未确定domain是否合法
+		localError = false;
 	}
 	/**
 	 * {@inheritDoc}
@@ -111,13 +123,17 @@ public class MaillistBaseListener implements MaillistListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterUDomain(MaillistParser.UDomainContext ctx) { }
+	@Override public void enterUDomain(MaillistParser.UDomainContext ctx) {
+
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitUDomain(MaillistParser.UDomainContext ctx) {
+		//若退出domain区域，说明邮箱地址基本完整
+		domainError = false;
 	}
 	/**
 	 * {@inheritDoc}
@@ -156,8 +172,7 @@ public class MaillistBaseListener implements MaillistListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void visitErrorNode(ErrorNode node) {
-		isFalse = (!isFalse);
-
+		nodeError = true;
 		System.out.println("出错了！"+node.getText());
 	}
 }
