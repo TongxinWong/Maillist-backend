@@ -7,6 +7,8 @@ package com.lw.maillist.grammar;
  **/
 public class MailBox {
     public String mailAddress;
+    public String userName;
+    public String domain;
     public boolean isError;
 
     public void setMailAddress(String mailAddress) {
@@ -15,5 +17,13 @@ public class MailBox {
 
     public void setError(boolean error) {
         isError = error;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
     }
 }

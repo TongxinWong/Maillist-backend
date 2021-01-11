@@ -19,6 +19,8 @@ public class MaillistBaseListener implements MaillistListener {
 	public MailBox mailBox = new MailBox();
 	public List<String> mailAddress = new ArrayList<String>();
 	public List<Boolean> isError = new ArrayList<Boolean>();
+	public String userName;
+	public String domain;
 	public String finalMailList;
 	public boolean localError;
 	public boolean domainError;
@@ -42,7 +44,6 @@ public class MaillistBaseListener implements MaillistListener {
 	 */
 	@Override public void exitMaillist(MaillistParser.MaillistContext ctx) {
 		finalMailList = ctx.getText();
-		System.out.println(ctx.getText());
 
 	}
 	/**
@@ -69,8 +70,11 @@ public class MaillistBaseListener implements MaillistListener {
 			isFalse = (!isFalse);
 		}
 		System.out.println("local: "+localError+" domain: "+domainError+" node: "+nodeError);
+
 		mailBox.setMailAddress(ctx.getText());
 		mailBox.setError(isFalse);
+		mailBox.setUserName(userName);
+		mailBox.setDomain(domain);
 		mailBoxes.add(mailBox);
 
 		mailBox = new MailBox();
@@ -95,6 +99,7 @@ public class MaillistBaseListener implements MaillistListener {
 	@Override public void exitULocal_part(MaillistParser.ULocal_partContext ctx) {
 		//用户地址合法，但尚未确定domain是否合法
 		localError = false;
+		userName = ctx.getText();
 	}
 	/**
 	 * {@inheritDoc}
@@ -136,6 +141,7 @@ public class MaillistBaseListener implements MaillistListener {
 	@Override public void exitUDomain(MaillistParser.UDomainContext ctx) {
 		//若退出domain区域，说明邮箱地址基本完整
 		domainError = false;
+		domain = ctx.getText();
 	}
 	/**
 	 * {@inheritDoc}
