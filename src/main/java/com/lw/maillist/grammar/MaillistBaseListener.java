@@ -19,6 +19,7 @@ public class MaillistBaseListener implements MaillistListener {
 	public MailBox mailBox = new MailBox();
 	public List<String> mailAddress = new ArrayList<String>();
 	public List<Boolean> isError = new ArrayList<Boolean>();
+	public String finalMailList;
 	public boolean localError;
 	public boolean domainError;
 	public boolean nodeError;
@@ -40,6 +41,7 @@ public class MaillistBaseListener implements MaillistListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitMaillist(MaillistParser.MaillistContext ctx) {
+		finalMailList = ctx.getText();
 		System.out.println(ctx.getText());
 
 	}

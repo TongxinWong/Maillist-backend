@@ -92,6 +92,7 @@ public class BaseController {
         maillist.errMsg = new ArrayList<String>();
         maillist.errMsg.addAll(myLexErrorListener.errorList);
         maillist.errMsg.addAll(myParseErrorListener.errorList);
+        maillist.finalList = maillistBaseListener.finalMailList;
         maillist.hasError = false;
         if (maillistBaseListener.isError.contains(true)){
             maillist.hasError = true;
