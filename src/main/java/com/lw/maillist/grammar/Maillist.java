@@ -11,4 +11,5 @@ public class Maillist {
     public List<MailBox> mailBoxes;
     public List<String> errMsg;
     public boolean hasError;
+
 }

@@ -9,6 +9,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping("/api")
 public class BaseController {
@@ -87,7 +89,9 @@ public class BaseController {
         Maillist maillist = new Maillist();
 
         maillist.mailBoxes = maillistBaseListener.mailBoxes;
-        maillist.errMsg = myParseErrorListener.errorList;
+        maillist.errMsg = new ArrayList<String>();
+        maillist.errMsg.addAll(myLexErrorListener.errorList);
+        maillist.errMsg.addAll(myParseErrorListener.errorList);
         maillist.hasError = false;
         if (maillistBaseListener.isError.contains(true)){
             maillist.hasError = true;

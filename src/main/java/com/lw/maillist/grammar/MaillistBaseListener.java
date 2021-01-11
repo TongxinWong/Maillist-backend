@@ -5,8 +5,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 /**
  * This class provides an empty implementation of {@link MaillistListener},
  * which can be extended to create a listener which only needs to handle a subset
@@ -15,10 +15,10 @@ import java.util.Stack;
 public class MaillistBaseListener implements MaillistListener {
 
 	//定义数据结构用来存放中间数据
-	public List<MailBox> mailBoxes = new Stack<MailBox>();
+	public List<MailBox> mailBoxes = new ArrayList<MailBox>();
 	public MailBox mailBox = new MailBox();
-	public List<String> mailAddress = new Stack<String>();
-	public List<Boolean> isError = new Stack<Boolean>();
+	public List<String> mailAddress = new ArrayList<String>();
+	public List<Boolean> isError = new ArrayList<Boolean>();
 	public boolean localError;
 	public boolean domainError;
 	public boolean nodeError;
